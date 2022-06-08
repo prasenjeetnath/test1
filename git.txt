@@ -1,0 +1,13 @@
+download git for windows
+2.open git bash for the folder you want to copy
+3. type git init
+4. git add .
+5. Now we need to commit our code changes made to the files to a local repository. Each commit will have an unique ID for the reference. It is important to add a commit message as well, that will tell us what changes we have made.
+ git commit -m "first repo"
+6. To see the branches in your repository, use the below command. git branch
+7.git branch -M main
+8. git remote add origin "Azure DevOps repo url"
+9.Finally we push our code to the Azure Repo.   git push -u origin --all
+10.Sometimes there are changes in your Azure Repo (may be changed by your team member) which are not present locally, in such cases, you might receive an error message as below.
+  So first we need to get the changes from remote repository to our local repository. This command will get all the changes to the local repo.  git pull
+It is a good practice to pull the changes first and then make your changes on top of it. There are many other git commands available. I have covered the basic ones which is sufficient for you to get starte
