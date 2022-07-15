@@ -1,0 +1,49 @@
+# Set the Azure Provider source and version being used
+terraform {
+  required_version = ">= 0.14"
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.1.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure provider
+provider "azurerm" {
+  features {}
+}
+
+terraform {
+  backend "azurerm" {
+    resource_group_name      = "rgteswesteu001"
+    storage_account_name     = "strgtestwesteu001"
+    container_name           = "conttesywesteu001"
+    key                      = "terraform.tfstate"
+  }
+}
+# use the existing Resource Group 
+data "azurerm_resource_group" "resourcegroup" {
+  name     = "rgteswesteu001"
+}
+
+# Create a Storage account
+resource "azurerm_storage_account" "terraform_state" {
+  name                     = "sttestwesteu008"
+  resource_group_name      = "rgteswesteu001"
+  location                 = "West Europe"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  tags = {
+    environment = "my-terraform-env"
+  }
+}
+
+# Create a Storage container
+resource "azurerm_storage_container" "terraform_state" {
+  name                  = "conttestwesteu008"
+  storage_account_name  = azurerm_storage_account.terraform_state.name
+  container_access_type = "private"
+}
