@@ -19,7 +19,40 @@ steps:
   displayName: 'Run a multi-line script'
 
 - task: TerraformInstaller@1
+  displayName: 'Terraform install'
   inputs:
     terraformVersion: 'latest'
+
+- task: TerraformTaskV4@4
+  displayName: 'terraform init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Visual Studio Professional Subscription(358697ff-3d25-42c3-8d65-fb576dd74214)'
+    backendAzureRmResourceGroupName: 'test_RG'
+    backendAzureRmStorageAccountName: 'sgcitest001'
+    backendAzureRmContainerName: 'contcitest001'
+    backendAzureRmKey: $(KEY)
+
+- task: TerraformTaskV4@4
+  displayName: 'terraform Plan'
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'Visual Studio Professional Subscription(1)(358697ff-3d25-42c3-8d65-fb576dd74214)'
+
+- task: TerraformTaskV4@4
+  displayName: 'terraform validate'
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+
+- task: TerraformTaskV4@4
+  displayName: 'terraform apply'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'Visual Studio Professional Subscription(2)(358697ff-3d25-42c3-8d65-fb576dd74214)'
+
 
 
